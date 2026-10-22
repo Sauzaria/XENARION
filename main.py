@@ -43,7 +43,7 @@ from PyQt6.QtGui import (
 # サーバー設定（ここを自分のRender URLに変更）
 # ============================================================
 LICENSE_SERVER = os.environ.get(
-    "XENARION_SERVER", "https://xenarion-license.onrender.com"
+    "XENARION_SERVER", "https://xenarion.onrender.com"
 )
 LICENSE_CACHE_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "license_cache.json"

@@ -1,5 +1,4 @@
 import os
-import hashlib
 from datetime import datetime, timezone, timedelta
 from functools import wraps
 
@@ -16,9 +15,13 @@ app = Flask(__name__)
 # 設定
 # ============================================================
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///local.db")
-# Render の DATABASE_URL は postgres:// 形式なので postgresql:// に変換
+
+# Render の URL 形式（postgres:// や postgresql://）を
+# psycopg2 用の形式（postgresql+psycopg2://）に強制変換する
 if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+psycopg2://", 1)
+elif DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg2://", 1)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
